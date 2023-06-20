@@ -151,6 +151,7 @@ class AuthController {
 
     async updateSettings( req, res, next ) {
         try{
+        
             const id = req.user.userId;
             await this.service.updateSettings( id, req.body );
             res.sendCalmResponse( null, { 'updated': true } );

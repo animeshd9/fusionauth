@@ -116,10 +116,10 @@ class AuthService {
             
             // Check the token is a valid JWT
             const user = await this.model.decodeToken( token );
-            console.log(user);
-            if ( !user ) {
-                throw new CalmError('UNAUTHORIZED_ERROR');
-            }
+            console.log(user, '-------------');
+            // if ( !user ) {
+            //     throw new CalmError('UNAUTHORIZED_ERROR');
+            // }
             // Check the Extracted user is active in DB
             
             return user;
@@ -187,8 +187,8 @@ class AuthService {
         ];
         
         try {
-            const data = JSON.parse( jsonData );
-            for ( const field of data ) {
+          
+            for ( const field of Object.keys(jsonData) ) {
                 if ( !requiredFields.includes( field ) ) {
                     throw new CalmError('VALIDATION_ERROR', `Invalid Settings ${field}}`);
                 }
@@ -200,8 +200,9 @@ class AuthService {
     async updateSettings( id, data ) {
         try {
         // validate json file before saving
+        console.log('settings')
             this.validateAppSettings( data );
-            return await this.userService.updateSettings( id, data );
+            return await this.userService.updateSettings( id, { settings: data} );
         } catch ( error ) {
             throw error;
         }

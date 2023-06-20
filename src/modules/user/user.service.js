@@ -52,9 +52,9 @@ class UserService extends CalmService {
     }
     async updateSettings( id, data ) {
         try {
-            const user = await this.model.findOneAndUpdate( { userId : id}, data, { returnNewDocument: true, upsert: true} );
+            const user = await this.model.findOneAndUpdate( { userId: id }, data, { returnNewDocument: true, upsert: true } );
 
-            return { 'updated': user };
+            return { 'updated': true };
         } catch ( errors ) {
             throw errors;
         }

@@ -38,7 +38,8 @@ class User {
             'userId': {
                 type: String,
                 required: true,
-            }
+            },
+   
       
 
         }, { 'timestamps': true } );
