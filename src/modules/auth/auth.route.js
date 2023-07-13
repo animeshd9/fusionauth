@@ -16,6 +16,6 @@ router.post( '/password-reset', AuthController.resetPassword );
 router.get( '/profile', AuthController.checkLogin, AuthController.getProfile );
 router.put('/settings', AuthController.checkLogin, AuthController.updateSettings);
 router.put( '/profile', AuthController.checkLogin, AuthController.updateProfile );
-
+router.post('/multi-device', AuthController.checkLogin, AuthController.multiDeviceLogin);
 
 module.exports = router;

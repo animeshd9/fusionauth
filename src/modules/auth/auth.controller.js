@@ -160,6 +160,15 @@ class AuthController {
             next( e );
         }
     }
+    async multiDeviceLogin( req, res, next ) {
+        try {
+            const id = req.user.userId;
+            const result = await this.service.multiDeviceLogin(id, req.body);
+            res.sendCalmRespose(result);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new AuthController( authService );

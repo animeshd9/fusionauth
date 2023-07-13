@@ -39,7 +39,6 @@ class User {
                 type: String,
                 required: true,
             },
-   
       
 
         }, { 'timestamps': true } );

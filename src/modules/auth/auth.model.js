@@ -15,10 +15,18 @@ class Auth {
                 'type': String,
                 'required': true,
             },
-            'user': {
-                'type': Schema.Types.ObjectId,
-                'required': true,
-                'ref': 'user'
+            // 'user': {
+            //     'type': Schema.Types.ObjectId,
+            //     'required': true,
+            //     'ref': 'user'
+            // },
+            'deviceId': {
+                'type': String,
+                'required': true
+            },
+            'userId': {
+                'type': String,
+                'required': true
             }
         }, { 'timestamps': true } );
 

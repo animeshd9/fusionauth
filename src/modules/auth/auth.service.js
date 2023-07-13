@@ -3,7 +3,7 @@ const { UserService } = require( '../user/user.service' );
 const autoBind = require( 'auto-bind' );
 const mongoose = require( 'mongoose' );
 const { CalmError } = require('../../../system/core/CalmError');
-// const { FusionAuthClient } = require('@fusionauth/node-client');
+const { FusionAuthClient } = require('fusionauth-node-client');
 class AuthService {
     constructor( model, userModel ) {
         this.model = model;
@@ -200,11 +200,32 @@ class AuthService {
     async updateSettings( id, data ) {
         try {
         // validate json file before saving
-        console.log('settings')
+            console.log('settings');
             this.validateAppSettings( data );
-            return await this.userService.updateSettings( id, { settings: data} );
+            return await this.userService.updateSettings( id, { settings: data } );
         } catch ( error ) {
             throw error;
+        }
+    }
+    async multiDeviceLogin( id, data ) {
+        try {
+            const response = await FusionAuthClient.login(data.email, data.password);
+            console.log(response);
+            const { token, user } = response.response;
+
+            const tokenData = await this.model.find({ user: user.id });
+            if( !tokenData ) {
+                await this.model.create(response.response);
+                return true;
+            }
+            const deviceId = await this.model.find( { user: user.Id, deviceId: data.deviceId } );
+            if( !deviceId ) {
+                return false;
+            }
+            await this.model.create(response.response);
+            return true;
+        } catch (e) {
+            throw e;
         }
     }
 
